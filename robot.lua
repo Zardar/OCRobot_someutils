@@ -78,7 +78,7 @@ function trade()
 end
 
 function work()
-  while not i(1) do
+  while not i(1) or i(1).size < count do
     w(1)
   end
   re(3)
