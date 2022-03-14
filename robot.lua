@@ -23,7 +23,7 @@ function trade()
  w(0.2)
  i=getStackInInternalSlot(1)
  if i then r.drop(1) return work()
- else end
+ else end end end
 
 function work()
 while not getStackInInternalSlot(1) do
