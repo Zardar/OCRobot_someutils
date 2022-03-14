@@ -35,5 +35,5 @@ end
 r.drop(3)
 return waitFor()
 end
-
-waitFor()
+while true do
+waitFor() end
