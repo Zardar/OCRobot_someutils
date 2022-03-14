@@ -7,7 +7,7 @@ local inv=r.inventorySize()
 local t=os.time()
 local c=r.compareTo
 
-function wait()
+function waitFor()
 r.select(1)
 while true do
 w(1)
@@ -30,7 +30,7 @@ while not getStackInInternalSlot(1) do
 w(1)
 end
 r.drop(3)
-return wait()
+return waitFor()
 end
 
-wait()
+waitFor()
