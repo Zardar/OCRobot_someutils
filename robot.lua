@@ -6,7 +6,8 @@ local r=require('robot')
 local inv=r.inventorySize()
 local t=os.time()
 local c=r.compareTo
-
+local i=require('component').inventory_controller
+local s={}
 function waitFor()
 r.select(1)
 while true do
@@ -21,12 +22,12 @@ function trade()
  t=os.time()
  while os.time()-t < 9000 do
  w(0.2)
- i=getStackInInternalSlot(1)
- if i then r.drop(1) return work()
+ s=i.getStackInInternalSlot(1)
+ if s then r.drop(1) return work()
  else end end end
 
 function work()
-while not getStackInInternalSlot(1) do
+while not i.getStackInInternalSlot(1) do
 w(1)
 end
 r.drop(3)
