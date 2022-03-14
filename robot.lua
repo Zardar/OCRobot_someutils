@@ -13,7 +13,7 @@ r.select(1)
 while true do
 w(1)
   r.suck()
-if c(15) then return trade()
+if c(15) and i getStackInInternalSlot(1).size==64 then return trade()
 else r.drop(3)
 end end
 end
