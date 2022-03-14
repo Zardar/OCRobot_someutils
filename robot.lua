@@ -1,39 +1,96 @@
-
-
 --robot with scanner on up side
-local w=require('os').sleep
-local r=require('robot')
+local component=require('component')
+local r=component.proxy(component.list('robot')())
+local comp=require('computer')
+local i=component.proxy(component.list('inventory_controller')()).getStackInInternalSlot
+
+local w=os.sleep
+local t=0
 local inv=r.inventorySize()
-local t=os.time()
-local c=r.compareTo
-local i=require('component').inventory_controller
 local s={}
+local count=''
+local price=''
+
+  while not tonumber(price) do
+  print('введите объём минимальной партии предметов оплаты:')
+    price=tonumber(io.read())
+    if tonumber(price) and tonumber(price) > 64 then price = nil end
+  end
+while not tonumber(count) do
+  print('введите объём минимальной партии обрабатываемых предметов:')
+    count=tonumber(io.read())
+    if tonumber(count) and tonumber(count) > 64 then count = nil end
+  end
+
+function re(n)
+  r.turn(true)
+  r.drop(3,n)
+  r.turn(false)
+  return true
+end
+
 function waitFor()
-r.select(1)
-while true do
-w(1)
-  r.suck()
-if c(15) and i getStackInInternalSlot(1).size==64 then return trade()
-else r.drop(3)
-end end
+  r.select(1)
+  w(0.05)
+  r.suck(3)
+  if i(1) then
+    if r.compareTo(inv) then
+      if i(1).size==price then
+        return trade()
+      end
+    end
+    re(i(1).size)
+    return waitFor()
+  end
 end
 
 function trade()
- r.drop(0)
- t=os.time()
- while os.time()-t < 9000 do
- w(0.2)
-  r.suck(3)
- s=i.getStackInInternalSlot(1)
- if s then r.drop(1) return work()
- else end end end
+  t=0
+  while t < 150 do
+    t=t+1
+    w(0.1)
+    r.suck(3)
+    s=i(2)
+    if s then 
+      print('oppa, 4e tyt')
+      r.select(2)
+      if s.size > count then
+        re(s.size-count)
+      end
+      if r.drop(1) then
+        r.select(1)
+        r.drop(0)
+        return work()
+      else
+        re(i(2).size)
+        r.select(1)
+        re(i(1).size)
+        return waitFor()
+      end
+    else
+      
+    end
+    
+  end
+  print('pizdec, 9 zaebalsya jdat')
+      re(i(1).size)
+  return waitFor()
+end
 
 function work()
-while not i.getStackInInternalSlot(1) do
-w(1)
+  while not i(1) do
+    w(1)
+  end
+  re(3)
+  for slot = 1, inv-1 do
+    s=i(slot)
+    if s then
+      r.select(slot)
+      re(s.size)
+    end
+  end
+  return waitFor()
 end
-r.drop(3)
-return waitFor()
-end
+
 while true do
 waitFor() end
