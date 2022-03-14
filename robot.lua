@@ -1,4 +1,8 @@
---robot with scanner on up side
+--утилита принимает оплату и предметы для обравботки
+--в указанных количествах. оплата помещается вниз
+--на обработку подаются вверх
+--после этого роботи ждет пока предметы будут обработаны
+--и возвращает готовое заказчику
 local component=require('component')
 local r=component.proxy(component.list('robot')())
 local comp=require('computer')
