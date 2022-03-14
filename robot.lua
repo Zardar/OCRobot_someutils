@@ -13,7 +13,7 @@ while true do
 w(1)
 if c(15) then return trade()
 else r.drop(3)
-end
+end end
 end
 
 function trade()
