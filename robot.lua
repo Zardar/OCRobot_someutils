@@ -76,7 +76,7 @@ function trade()
     end
     
   end
-  print('pizdec, 9 zaebalsya jdat')
+  print('ystal jdat')
       re(i(1).size)
   return waitFor()
 end
